@@ -1,51 +1,37 @@
 import React from 'react';
 import '../CSS/LocationList.css';
-import LocationWeather from './Components/LocationWeather';
+import LocationWeather from './LocationWeather';
 
 class LocationList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      locationsArray: ['atlanta, ga']
+    };
   }
 
-  componentDidMount() {
-    const url = `http://localhost:4000/api/companies/${this.props.match.params.id}`;
-    // console.log(url);
-    fetch(url)
-      .then(company => company.json())
-      .then(company => {
-        this.setState({
-          company: {
-            _id: company._id,
-            name: company.name,
-            picture: company.picture,
-            summary: company.summary,
-            industry: company.industry,
-            stage: company.stage,
-            productAndServices: company.productAndServices,
-            need1: company.needs[0],
-            need2: company.needs[1],
-            need3: company.needs[2],
-            website: company.website,
-            email: company.email,
-            phone: company.phone,
-            youtubeLink: company.youtubeLink,
-            paypalLink: company.paypalLink,
-            profile: company.profile,
-            linkedIn: company.linkedIn,
-            ownerName: company.ownerName
-          }
-        })
-      });
-  }
+  //check location storage on component did mount for locations array 
+  
+  //add components for add location here
+
+  //functions needed for handle click delete and handle submit that updates locationsArray... writes array to location storage
 
   render() {
+
+    let locationWeatherComponents = this.state.locationsArray.map(location => {
+      return <LocationWeather key={location} location={location} />
+    });
+
     return (
       <div className="location-list">
-        
+        {locationWeatherComponents}
       </div>
     );
   }
 }
+
+// const _convertToLocationElement = (locationData) => {
+//   return <LocationWeather key={'test'} locationData={locationData} />
+// };
 
 export default LocationList;

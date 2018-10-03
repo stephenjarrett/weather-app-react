@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import LocationList from './Components/LocationList';
-import LocationWeather from './Components/LocationWeather';
+// import LocationWeather from './Components/LocationWeather';
 
 class App extends Component {
   constructor(props) {
