@@ -42,17 +42,22 @@ class LocationWeather extends React.Component {
     render() {
       //renders nothing if API hasn't return data...
       if (!this.state.weatherData) {
+        // alert('Invalid Query!');
         return null;
-      } else if (this.state.failedToGetData === true) {
-        return (
-        <div>{this.props.location}: Failed to retrieve data from server</div>
-        )
+      } 
+      else if (this.state.failedToGetData === true) {
+        // return (
+        // alert('Failed to retrieve data from the server! Enter location as "City, State"');
+        // this._fetchWeatherData();
+        return null;
+        // <div>{this.props.location}: Failed to retrieve data from server</div>
+        // )
       }
     
     return (
       //create day of component and forecast component to clean this up.. pass in data as props
       <div className="location-weather">
-        {this.props.location}
+        {this.state.weatherData.location.city}, {this.state.weatherData.location.region}
         <div className="current-weather daily-weather-container">
           {this.state.weatherData.item.forecast[0].day}
           {this.state.weatherData.item.forecast[0].date}
@@ -127,7 +132,7 @@ class LocationWeather extends React.Component {
           </div>
         </div>
         <div className="remove-location">
-          <button onClick={() => this.props.delete(this.props.location)}>Remove</button>
+          <button onClick={() => this.props.delete(this.props.location)}>Remove Location</button>
         </div>
       </div>
     );

@@ -15,9 +15,10 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
-        <LocationList />
-      </div>
+    <div className="App">
+      <h1>Badass Weather App</h1>
+      <LocationList />
+    </div>
     );
   }
 }
