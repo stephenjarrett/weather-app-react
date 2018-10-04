@@ -6,7 +6,7 @@ class AddNewLocation extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="input-container">
           <form onSubmit={(e) => {
             this.props.handleSubmit();
             e.preventDefault();

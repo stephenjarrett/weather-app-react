@@ -12,6 +12,16 @@ class LocationList extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (localStorage.getItem('locations')) {
+      this.setState({
+        locationsArray: JSON.parse(localStorage.getItem('locations'))
+      });
+    } else (
+      localStorage.setItem('locations', JSON.stringify(this.state.locationsArray))
+    )
+  }
+
   //check location storage on component did mount for locations array 
 
   //function to handle change on text input
@@ -23,7 +33,6 @@ class LocationList extends React.Component {
 
   //function the handle submit on text input
   _handleSubmit = () => {
-    console.log('submitting');
     this._addLocation();
   }
 
@@ -37,6 +46,8 @@ class LocationList extends React.Component {
       this.setState({
         locationsArray: newLocationsArray,
         newLocationText: ''
+      }, () => {
+        localStorage.setItem('locations', JSON.stringify(this.state.locationsArray))
       });
     } else {
       this.setState({
@@ -53,11 +64,15 @@ class LocationList extends React.Component {
 
     this.setState({
       locationsArray: newLocationsArray
+    }, () => {
+      localStorage.setItem('locations', JSON.stringify(this.state.locationsArray))
     });
+
   }
 
   render() {
 
+    // map the array of locations and create components
     let locationWeatherComponents = this.state.locationsArray.map(location => {
       return <LocationWeather key={location} location={location} delete={this._deleteLocation} />
     });
@@ -70,9 +85,5 @@ class LocationList extends React.Component {
     );
   }
 }
-
-// const _convertToLocationElement = (locationData) => {
-//   return <LocationWeather key={'test'} locationData={locationData} />
-// };
 
 export default LocationList;
