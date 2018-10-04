@@ -94,7 +94,7 @@ class LocationList extends React.Component {
       location={location} 
       delete={this._deleteLocation} 
       handleClick={this._handleClickForecastOther} 
-      selectedSection={this.state.selectedSection} />
+      selectedSection={this.state.selectedSection} localStorageArray={this.state.locationsArray} />
     });
 
     return (

@@ -19,6 +19,10 @@ class LocationWeather extends React.Component {
     // setInterval(this._fetchWeatherData, 1000000)
   }
 
+  componentWillUnmount() {
+
+  }
+
   // Calls on YAHOO WEATHER API, writes to local storage
   _fetchWeatherData = () => {
     let YAHOO_URL = `https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='${this.props.location}')&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`;
@@ -53,16 +57,16 @@ class LocationWeather extends React.Component {
     render() {
       //renders nothing if API hasn't return data...
       if (!this.state.weatherData) {
-        // alert('Invalid Query!');
         return null;
       } 
       else if (this.state.failedToGetData === true) {
-        // return (
-        // alert('Failed to retrieve data from the server! Enter location as "City, State"');
-        // this._fetchWeatherData();
+        //delete the failed attempt from local storage
+        let newLocationsArray = this.props.localStorageArray.filter((location) => {
+          return location !== this.props.location })
+
+        localStorage.setItem('locations', JSON.stringify(newLocationsArray))
+
         return null;
-        // <div>{this.props.location}: Failed to retrieve data from server</div>
-        // )
       }
     
     return (
