@@ -3,9 +3,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 For a live demo, please visit [my surge site](http://react-weather-stephen.surge.sh/)!
 
 **HOW TO RUN**
--To run this program, simply have **Node.js** installed on your computer and clone the repository. 
--Install all dependencies by running **npm install** from the root directory of the cloned repository in your CLI.
--Run **npm start** in your CLI to launch the app!
+1. To run this program, simply have **Node.js** installed on your computer and clone the repository. 
+2. Install all dependencies by running **npm install** from the root directory of the cloned repository in your CLI.
+3. Run **npm start** in your CLI to launch the app!
 
 This is a basic weather application built with React utilizing Yahoo's weather API. You can see the current conditions for a city of your choosing as well as a 3 day forecast and other additional whether information such as: wind conditions, atmosphere and sunset and sunrise times. Click see additional info to toggle between the forecast panel and the additional information panel.
 
