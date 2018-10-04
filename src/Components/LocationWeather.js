@@ -1,11 +1,12 @@
 import React from 'react';
-import '../CSS/LocationList.css';
+import '../CSS/LocationWeather.css';
 
 class LocationWeather extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      weatherData: ''
+      weatherData: '',
+      failedToGetData: false
     }
   }
   
@@ -22,26 +23,112 @@ class LocationWeather extends React.Component {
     fetch(YAHOO_URL)
       .then((response) => response.json())
       .then((jsonData) => {
-        this.setState({
-          weatherData: jsonData.query.results.channel
-        }, () => { console.log(this.state.weatherData)});
-      })
+        if (jsonData.query.results == null) {
+          this.setState({
+            failedToGetData: true,
+            weatherData: 'Failed to retrieve data'
+          }) 
+        } else {
+          this.setState({
+            weatherData: jsonData.query.results.channel
+          }, () => { console.log(this.state.weatherData)});
+        }
+        })
       .catch(function (err) {
         console.log(err);
       });
     }
     
     render() {
-      //renders nothing if API hasn't return data
+      //renders nothing if API hasn't return data...
       if (!this.state.weatherData) {
         return null;
+      } else if (this.state.failedToGetData === true) {
+        return (
+        <div>{this.props.location}: Failed to retrieve data from server</div>
+        )
       }
     
     return (
+      //create day of component and forecast component to clean this up.. pass in data as props
       <div className="location-weather">
         {this.props.location}
-        Low Temp:{this.state.weatherData.item.forecast[0].low}
-        {this.state.weatherData.units.speed}
+        <div className="current-weather daily-weather-container">
+          {this.state.weatherData.item.forecast[0].day}
+          {this.state.weatherData.item.forecast[0].date}
+          {this.state.weatherData.item.condition.temp}
+          {this.state.weatherData.item.condition.text}
+          <img src="http://l.yimg.com/a/i/us/we/52/31.gif" alt=""/>
+          <img src={this.state.weatherData.item.description.img} alt=""/>
+          High Temp:{this.state.weatherData.item.forecast[0].high}
+          Low Temp:{this.state.weatherData.item.forecast[0].low}
+          Wind Chill:{this.state.weatherData.wind.chill}
+          Direction:{this.state.weatherData.wind.direction}
+          Speed:{this.state.weatherData.wind.speed}mph
+        </div>
+        <div className="future-forecast daily-weather-container">
+          <div>
+            {this.state.weatherData.item.forecast[1].day}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[1].date}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[1].text}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[1].code}
+          </div>
+          <div>
+            High Temp:{this.state.weatherData.item.forecast[1].high}
+          </div>
+          <div>
+            Low Temp:{this.state.weatherData.item.forecast[1].low}
+          </div>
+        </div>
+        <div className="future-forecast daily-weather-container">
+          <div>
+            {this.state.weatherData.item.forecast[2].day}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[2].date}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[2].text}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[2].code}
+          </div>
+          <div>
+            High Temp:{this.state.weatherData.item.forecast[2].high}
+          </div>
+          <div>
+            Low Temp:{this.state.weatherData.item.forecast[2].low}
+          </div>
+        </div>
+        <div className="future-forecast daily-weather-container">
+          <div>
+            {this.state.weatherData.item.forecast[2].day}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[2].date}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[2].text}
+          </div>
+          <div>
+            {this.state.weatherData.item.forecast[2].code}
+          </div>
+          <div>
+            High Temp:{this.state.weatherData.item.forecast[2].high}
+          </div>
+          <div>
+            Low Temp:{this.state.weatherData.item.forecast[2].low}
+          </div>
+        </div>
+        <div className="remove-location">
+          <button onClick={() => this.props.delete(this.props.location)}>Remove</button>
+        </div>
       </div>
     );
   }

@@ -1,0 +1,15 @@
+.location-weather {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid black
+}
+
+.daily-weather-container {
+  border: 1px solid black;
+  background-color: aqua;
+}
+
+.future-forecast {
+  display: flex;
+  flex-direction: column;
+}
