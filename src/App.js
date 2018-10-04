@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import LocationList from './Components/LocationList';
-// import LocationWeather from './Components/LocationWeather';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +16,8 @@ class App extends Component {
   render() {
     return (
     <div className="App">
-      <h1>Badass Weather App</h1>
+      <h1 style={{margin:"30px 0 10px 0"}}>React Weather!</h1>
+      <img className="sun" src={require('./Images/sun.png')} style={{width:"80px"}} alt=""/>
       <LocationList />
     </div>
     );

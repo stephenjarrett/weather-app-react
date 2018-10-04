@@ -8,11 +8,13 @@ class LocationList extends React.Component {
     super(props);
     this.state = {
       locationsArray: ['ATLANTA, GA'],
-      newLocationText: ''
+      newLocationText: '',
+      selectedSection: 'forecast'
     };
   }
 
   componentDidMount() {
+    // Checks for local storage.. if it exists then it adds it to state... if it doesn't exist it goes ahead and writes to localstorage
     if (localStorage.getItem('locations')) {
       this.setState({
         locationsArray: JSON.parse(localStorage.getItem('locations'))
@@ -22,7 +24,18 @@ class LocationList extends React.Component {
     )
   }
 
-  //check location storage on component did mount for locations array 
+  //handle click for forecast vs other info 
+  _handleClickForecastOther = () => {
+    if (this.state.selectedSection === 'forecast') {
+      this.setState({
+        selectedSection: 'other'
+      });
+    } else {
+      this.setState({
+        selectedSection: 'forecast'
+      });
+    }
+  }
 
   //function to handle change on text input
   _handleChange = (newText) => {
@@ -47,6 +60,7 @@ class LocationList extends React.Component {
         locationsArray: newLocationsArray,
         newLocationText: ''
       }, () => {
+        // add item to local storage
         localStorage.setItem('locations', JSON.stringify(this.state.locationsArray))
       });
     } else {
@@ -65,6 +79,7 @@ class LocationList extends React.Component {
     this.setState({
       locationsArray: newLocationsArray
     }, () => {
+      //delete item from local storage
       localStorage.setItem('locations', JSON.stringify(this.state.locationsArray))
     });
 
@@ -74,12 +89,19 @@ class LocationList extends React.Component {
 
     // map the array of locations and create components
     let locationWeatherComponents = this.state.locationsArray.map(location => {
-      return <LocationWeather key={location} location={location} delete={this._deleteLocation} />
+      return <LocationWeather 
+      key={location} 
+      location={location} 
+      delete={this._deleteLocation} 
+      handleClick={this._handleClickForecastOther} 
+      selectedSection={this.state.selectedSection} />
     });
 
     return (
       <div className="location-list">
-        <AddNewLocation newLocationText={this.props.newLocationText} handleChange={this._handleChange} handleSubmit={this._handleSubmit} />
+        <AddNewLocation newLocationText={this.props.newLocationText} 
+        handleChange={this._handleChange} 
+        handleSubmit={this._handleSubmit} />
         {locationWeatherComponents}
       </div>
     );

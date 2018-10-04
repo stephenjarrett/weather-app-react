@@ -1,8 +1,8 @@
 .location-list {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
   text-align: center;
   margin: 10px 0px;
+  min-width: 360px;
 }

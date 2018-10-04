@@ -1,0 +1,41 @@
+.forecast-container {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.future-forecast {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 2px solid black;
+  height: 80px;
+  justify-content: center;
+}
+
+/* @media screen and (min-width: 480px) {
+
+} */
+
+@media screen and (min-width: 768px) {
+  .forecast-container {
+    flex-direction: row;
+  }
+
+  .future-forecast {
+    height: 100px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .future-forecast {
+    height: 150px;
+    border-top: 0px;
+    border-left: 0.5px solid rgba(0,0,0,0.4);
+  }
+
+  .forecast-container {
+    width: 400px;
+  }
+
+}

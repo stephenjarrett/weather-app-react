@@ -10,6 +10,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  min-width: 360px;
 }
 
 html {
@@ -21,11 +22,16 @@ html {
 
 .App {
   height: 100%;
+  width:100%;
   text-align: center;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
+}
+
+.sun {
+  animation: App-logo-spin 12s linear infinite
 }
 
 @keyframes App-logo-spin {
@@ -33,6 +39,6 @@ html {
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(359deg);
   }
 }

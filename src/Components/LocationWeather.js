@@ -1,12 +1,15 @@
 import React from 'react';
 import '../CSS/LocationWeather.css';
+import CurrentWeather from'../Components/CurrentWeather.js';
+import Forecast from'../Components/Forecast.js';
+import OtherWeatherInfo from'../Components/OtherWeatherInfo.js';
 
 class LocationWeather extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       weatherData: '',
-      failedToGetData: false
+      failedToGetData: false,
     }
   }
   
@@ -38,6 +41,14 @@ class LocationWeather extends React.Component {
         console.log(err);
       });
     }
+
+    _renderForecastOrOther = () => {
+      if (this.props.selectedSection === 'forecast') {
+        return <Forecast weatherData={this.state.weatherData} />
+      } else if (this.props.selectedSection === 'other') {
+        return <OtherWeatherInfo weatherData={this.state.weatherData} />
+      }
+    }
     
     render() {
       //renders nothing if API hasn't return data...
@@ -59,107 +70,24 @@ class LocationWeather extends React.Component {
       <div className="location-weather">
         <div className="name-container">
           <div className="name-container-left">
-            <h3>
+            <h4>
               {this.state.weatherData.location.city}, {this.state.weatherData.location.region}
-            </h3>
+            </h4>
+          </div>
+          <div className="name-container-right">
+            { this.props.selectedSection === 'forecast'
+            ? <button onClick={() => this.props.handleClick()}>More Information</button>
+            : <button onClick={() => this.props.handleClick()}>3 day Forecast</button>
+            }
           </div>
           <div className="remove-location">
             <button onClick={() => this.props.delete(this.props.location)}>&times;</button>
           </div>
         </div>
-        <div className="forecast-container">
-          <div className="current-weather daily-weather-container">
-            <div className="current-weather-left">
-              <img src="http://l.yimg.com/a/i/us/we/52/31.gif" alt=""/>
-              <div>
-                <strong>
-                  {this.state.weatherData.item.condition.text}
-                </strong>
-              </div>
-            </div>
-            <div className="current-weather-right">
-              <div>
-                <strong>
-                  Today - {this.state.weatherData.item.forecast[0].day}
-                </strong>
-              </div>
-              <div>
-                <strong>
-                  {this.state.weatherData.item.condition.temp}&#8457;
-                </strong>
-              </div>
-              <div>
-                <strong>
-                  H{this.state.weatherData.item.forecast[0].high}&#176;/
-                  L{this.state.weatherData.item.forecast[0].low}&#176;
-                </strong>
-              </div>
-              {/* Wind Chill:{this.state.weatherData.wind.chill}
-              Direction:{this.state.weatherData.wind.direction}
-              Speed:{this.state.weatherData.wind.speed}mph */}
+        <div className="main-weather-container">
+              <CurrentWeather weatherData={this.state.weatherData} />
+              {this._renderForecastOrOther()}
 
-            </div>
-          </div>
-          <div className="future-forecast daily-weather-container">
-            <div>
-              {this.state.weatherData.item.forecast[1].day}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[1].date}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[1].text}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[1].code}
-            </div>
-            <div>
-              High Temp:{this.state.weatherData.item.forecast[1].high}
-            </div>
-            <div>
-              Low Temp:{this.state.weatherData.item.forecast[1].low}
-            </div>
-          </div>
-          <div className="future-forecast daily-weather-container">
-            <div>
-              {this.state.weatherData.item.forecast[2].day}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[2].date}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[2].text}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[2].code}
-            </div>
-            <div>
-              High Temp:{this.state.weatherData.item.forecast[2].high}
-            </div>
-            <div>
-              Low Temp:{this.state.weatherData.item.forecast[2].low}
-            </div>
-          </div>
-          <div className="future-forecast daily-weather-container">
-            <div>
-              {this.state.weatherData.item.forecast[2].day}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[2].date}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[2].text}
-            </div>
-            <div>
-              {this.state.weatherData.item.forecast[2].code}
-            </div>
-            <div>
-              High Temp:{this.state.weatherData.item.forecast[2].high}
-            </div>
-            <div>
-              Low Temp:{this.state.weatherData.item.forecast[2].low}
-            </div>
-          </div>
         </div>
       </div>
     );
